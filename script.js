@@ -23,6 +23,14 @@ function actualizarPreview() {
 document.querySelectorAll('#formulario input, #formulario textarea')
   .forEach((el) => el.addEventListener('input', actualizarPreview));
 
-document.getElementById('btn-imprimir').addEventListener('click', () => window.print());
+document.getElementById('btn-imprimir').addEventListener('click', () => {
+  const nombre = document.getElementById('nombre').value.trim();
+  if (!nombre) {
+    document.getElementById('nombre').focus();
+    alert('Completá al menos tu nombre antes de imprimir el CV.');
+    return;
+  }
+  window.print();
+});
 
 actualizarPreview();
