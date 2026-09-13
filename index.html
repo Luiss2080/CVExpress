@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de CV</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 900px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  label { display: block; margin: 10px 0 4px; font-weight: 600; font-size: 0.9rem; }
+  input, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font: inherit; }
+  button { margin-top: 16px; padding: 10px 18px; background: #2c3e50; color: white; border: none; border-radius: 6px; cursor: pointer; }
+  #preview { border: 1px solid #ddd; padding: 24px; border-radius: 8px; }
+  #preview h1 { margin-top: 0; }
+  @media print {
+    body { grid-template-columns: 1fr; }
+    #formulario, button { display: none; }
+  }
+</style>
+</head>
+<body>
+  <div id="formulario">
+    <h1>Generador de CV</h1>
+    <label>Nombre completo</label>
+    <input type="text" id="nombre" placeholder="Tu nombre">
+    <label>Título / Profesión</label>
+    <input type="text" id="titulo" placeholder="Ej. Desarrollador Full-Stack">
+    <label>Email</label>
+    <input type="email" id="email" placeholder="tu@email.com">
+    <label>Teléfono</label>
+    <input type="text" id="telefono" placeholder="+591 ...">
+    <label>Resumen profesional</label>
+    <textarea id="resumen" rows="3" placeholder="Breve resumen sobre vos"></textarea>
+    <label>Experiencia (una por línea)</label>
+    <textarea id="experiencia" rows="4" placeholder="Empresa - Puesto - Años"></textarea>
+    <label>Educación (una por línea)</label>
+    <textarea id="educacion" rows="3" placeholder="Institución - Título - Año"></textarea>
+    <label>Habilidades (separadas por coma)</label>
+    <input type="text" id="habilidades" placeholder="React, Node.js, PHP...">
+    <button id="btn-imprimir">🖨️ Descargar / Imprimir CV</button>
+  </div>
+  <div id="preview">
+    <h1 id="p-nombre">Tu Nombre</h1>
+    <p id="p-titulo"></p>
+    <p id="p-contacto"></p>
+    <p id="p-resumen"></p>
+    <h3>Experiencia</h3>
+    <ul id="p-experiencia"></ul>
+    <h3>Educación</h3>
+    <ul id="p-educacion"></ul>
+    <h3>Habilidades</h3>
+    <p id="p-habilidades"></p>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
