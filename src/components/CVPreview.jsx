@@ -1,5 +1,6 @@
 import React from 'react';
 import LayoutClassic from '../layouts/LayoutClassic';
+import LayoutModern from '../layouts/LayoutModern';
 
 export default function CVPreview({ data, layout, cvRef }) {
   return (
@@ -13,7 +14,7 @@ export default function CVPreview({ data, layout, cvRef }) {
         }}
       >
         {layout === 'classic' && <LayoutClassic data={data} />}
-        {/* Futuros layouts se agregarán aquí */}
+        {layout === 'modern' && <LayoutModern data={data} />}
       </div>
     </div>
   );

@@ -85,7 +85,7 @@ function App() {
             <label style={{ display: 'block', marginBottom: '8px' }}>Plantilla del CV</label>
             <div style={{ display: 'flex', gap: '8px' }}>
               <AnimatedButton variant={layout === 'classic' ? 'primary' : 'secondary'} onClick={() => setLayout('classic')} icon={LayoutTemplate}>Clásico</AnimatedButton>
-              <AnimatedButton variant={layout === 'modern' ? 'primary' : 'secondary'} onClick={() => setLayout('modern')} icon={LayoutTemplate}>Moderno (Próximamente)</AnimatedButton>
+              <AnimatedButton variant={layout === 'modern' ? 'primary' : 'secondary'} onClick={() => setLayout('modern')} icon={LayoutTemplate}>Moderno</AnimatedButton>
             </div>
           </div>
           <div>
