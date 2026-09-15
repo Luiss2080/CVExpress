@@ -1,15 +1,16 @@
-# 📄 Generador de CV
+# React + Vite
 
-Completá un formulario y mirá tu currículum armarse en vivo, listo para
-imprimir o guardar como PDF (`Ctrl+P` → Guardar como PDF). Todo corre en tu
-navegador, ningún dato sale de tu computadora. HTML/CSS/JS puro.
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-Gratis para usar, modificar y regalar.
+Currently, two official plugins are available:
 
-## Usar
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-Abrí `index.html` en el navegador.
+## React Compiler
 
-## Licencia
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-MIT — usalo para lo que quieras.
+## Expanding the Oxlint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
