@@ -31,15 +31,26 @@
   padding: 0;
 }
 
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 body {
   font-family: 'Inter', sans-serif;
-  background-color: var(--bg-color);
+  background: linear-gradient(-45deg, #e0f2fe, #bfdbfe, #c7d2fe, #ddd6fe);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
   color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: color 0.3s ease;
   min-height: 100vh;
-  /* Soft background gradient */
-  background-image: radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 25%),
-                    radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.08), transparent 25%);
+}
+
+[data-theme='dark'] body {
+  background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #0f172a);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
 }
 
 .glass-panel {
