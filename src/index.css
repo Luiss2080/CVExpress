@@ -159,3 +159,72 @@ input:focus, textarea:focus, select:focus {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
 }
+
+/* CV preview / print + PDF export
+   The on-screen zoom-out lives on .cv-preview-scale so the ref'd
+   .cv-page node (captured by html2pdf/html2canvas, and shown as-is when
+   printed) never carries a CSS transform of its own. */
+.cv-preview-outer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.cv-preview-scale {
+  transform: scale(0.85);
+  transform-origin: top center;
+}
+
+.cv-page {
+  /* Long, unbroken input (URLs, long words, pasted text with no spaces)
+     must wrap instead of overflowing the fixed-width A4 page. */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+@media print {
+  body {
+    background: none;
+    animation: none;
+  }
+
+  /* Hide every part of the app that isn't the CV itself. */
+  .editor-section,
+  .modal-overlay {
+    display: none !important;
+  }
+
+  .app-container {
+    display: block;
+    height: auto;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+  }
+
+  .preview-section {
+    padding: 0;
+    overflow: visible;
+    background: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+  }
+
+  .cv-preview-scale {
+    transform: none;
+  }
+
+  .cv-page {
+    width: 100% !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+}

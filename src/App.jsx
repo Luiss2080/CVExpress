@@ -27,8 +27,12 @@ function App() {
       margin:       0,
       filename:     `${data.personalInfo.fullName || 'mi'}_CV.pdf`,
       image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2, useCORS: true },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      html2canvas:  { scale: 2, useCORS: true, windowWidth: element.scrollWidth },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      // A CV can run longer than one A4 page (many experience/education
+      // entries, a long summary); avoid slicing a section in half across
+      // a page break.
+      pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
     };
     html2pdf().set(opt).from(element).save();
   };
