@@ -4,7 +4,7 @@ import EditorForm from './components/EditorForm';
 import CVPreview from './components/CVPreview';
 import AnimatedButton from './components/ui/AnimatedButton';
 import Modal from './components/ui/Modal';
-import { Settings, Download, Moon, Sun, LayoutTemplate, HelpCircle } from 'lucide-react';
+import { Settings, Download, Moon, Sun, LayoutTemplate } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 
 function App() {
@@ -27,8 +27,12 @@ function App() {
       margin:       0,
       filename:     `${data.personalInfo.fullName || 'mi'}_CV.pdf`,
       image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2, useCORS: true },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      html2canvas:  { scale: 2, useCORS: true, windowWidth: element.scrollWidth },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      // A CV can run longer than one A4 page (many experience/education
+      // entries, a long summary); avoid slicing a section in half across
+      // a page break.
+      pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
     };
     html2pdf().set(opt).from(element).save();
   };
@@ -51,11 +55,21 @@ function App() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <h1 style={{ fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary)' }}>Generador CV Pro</h1>
           <div style={{ display: 'flex', gap: '8px' }}>
-            <AnimatedButton onClick={toggleTheme} variant="secondary" style={{ padding: '8px' }}>
-              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+            <AnimatedButton
+              onClick={toggleTheme}
+              variant="secondary"
+              style={{ padding: '8px' }}
+              aria-label={theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'}
+            >
+              {theme === 'light' ? <Moon size={20} aria-hidden="true" /> : <Sun size={20} aria-hidden="true" />}
             </AnimatedButton>
-            <AnimatedButton onClick={() => setSettingsOpen(true)} variant="secondary" style={{ padding: '8px' }}>
-              <Settings size={20} />
+            <AnimatedButton
+              onClick={() => setSettingsOpen(true)}
+              variant="secondary"
+              style={{ padding: '8px' }}
+              aria-label="Abrir configuración avanzada"
+            >
+              <Settings size={20} aria-hidden="true" />
             </AnimatedButton>
           </div>
         </div>
