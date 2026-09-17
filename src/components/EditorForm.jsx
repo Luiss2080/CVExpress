@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Reorder, motion, AnimatePresence } from 'framer-motion';
 import AnimatedButton from './ui/AnimatedButton';
-import { Plus, Trash2, GripVertical, ChevronUp, ChevronDown } from 'lucide-react';
+import { Plus, Trash2, GripVertical, CheckCircle, ChevronUp, ChevronDown } from 'lucide-react';
+import { parseSkills, addSkillToString, removeSkillFromString } from '../utils/skills';
 
 export default function EditorForm({ data, updatePersonalInfo, updateSettings, setFullData }) {
   const [activeTab, setActiveTab] = useState('personal');
@@ -54,18 +55,13 @@ export default function EditorForm({ data, updatePersonalInfo, updateSettings, s
   const addSkill = (e) => {
     if (e.key === 'Enter' && skillInput.trim()) {
       e.preventDefault();
-      const currentSkills = data.skills ? data.skills.split(',').map(s => s.trim()) : [];
-      if (!currentSkills.includes(skillInput.trim())) {
-        currentSkills.push(skillInput.trim());
-        setFullData(p => ({ ...p, skills: currentSkills.join(', ') }));
-      }
+      setFullData(p => ({ ...p, skills: addSkillToString(p.skills, skillInput) }));
       setSkillInput('');
     }
   };
 
   const removeSkill = (skillToRemove) => {
-    const currentSkills = data.skills.split(',').map(s => s.trim());
-    setFullData(p => ({ ...p, skills: currentSkills.filter(s => s !== skillToRemove).join(', ') }));
+    setFullData(p => ({ ...p, skills: removeSkillFromString(p.skills, skillToRemove) }));
   };
 
   const tabs = [
@@ -278,19 +274,19 @@ export default function EditorForm({ data, updatePersonalInfo, updateSettings, s
                   />
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '10px' }}>
-                  {data.skills && data.skills.split(',').map((s, idx) => s.trim() ? (
+                  {parseSkills(data.skills).map((s) => (
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      key={idx}
+                      key={s}
                       style={{ background: 'var(--primary)', color: 'white', padding: '4px 12px', borderRadius: '16px', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '6px' }}
                     >
-                      {s.trim()}
-                      <button onClick={() => removeSkill(s.trim())} aria-label={`Eliminar habilidad: ${s.trim()}`} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', display: 'flex' }}>
+                      {s}
+                      <button onClick={() => removeSkill(s)} aria-label={`Eliminar habilidad: ${s}`} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', display: 'flex' }}>
                         <Trash2 size={12} aria-hidden="true" />
                       </button>
                     </motion.div>
-                  ) : null)}
+                  ))}
                 </div>
               </div>
             </section>

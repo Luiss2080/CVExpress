@@ -1,4 +1,5 @@
 import React from 'react';
+import { parseSkills } from '../utils/skills';
 
 export default function LayoutClassic({ data }) {
   const { personalInfo, experience, education, skills, settings } = data;
@@ -66,11 +67,11 @@ export default function LayoutClassic({ data }) {
         <section>
           <h3 style={{ fontSize: '1.2rem', borderBottom: '1px solid #eee', marginBottom: '10px', paddingBottom: '4px', color: color }}>HABILIDADES</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {skills.split(',').map((s, idx) => s.trim() ? (
-              <span key={idx} style={{ background: '#f1f5f9', padding: '4px 10px', borderRadius: '4px', fontSize: '0.9rem', color: '#334155' }}>
-                {s.trim()}
+            {parseSkills(skills).map((s) => (
+              <span key={s} style={{ background: '#f1f5f9', padding: '4px 10px', borderRadius: '4px', fontSize: '0.9rem', color: '#334155' }}>
+                {s}
               </span>
-            ) : null)}
+            ))}
           </div>
         </section>
       )}

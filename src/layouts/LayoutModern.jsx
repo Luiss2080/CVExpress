@@ -1,4 +1,5 @@
 import React from 'react';
+import { parseSkills } from '../utils/skills';
 
 export default function LayoutModern({ data }) {
   const { personalInfo, experience, education, skills, settings } = data;
@@ -33,9 +34,9 @@ export default function LayoutModern({ data }) {
           <div>
             <h3 style={{ fontSize: '1.2rem', borderBottom: '1px solid rgba(255,255,255,0.3)', marginBottom: '15px', paddingBottom: '5px' }}>Habilidades</h3>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '0.9rem', lineHeight: '1.8' }}>
-              {skills.split(',').map((s, idx) => s.trim() ? (
-                <li key={idx} style={{ background: 'rgba(0,0,0,0.15)', padding: '4px 10px', borderRadius: '4px', marginBottom: '8px', display: 'inline-block', marginRight: '6px' }}>{s.trim()}</li>
-              ) : null)}
+              {parseSkills(skills).map((s) => (
+                <li key={s} style={{ background: 'rgba(0,0,0,0.15)', padding: '4px 10px', borderRadius: '4px', marginBottom: '8px', display: 'inline-block', marginRight: '6px' }}>{s}</li>
+              ))}
             </ul>
           </div>
         )}
