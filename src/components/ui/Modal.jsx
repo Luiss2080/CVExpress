@@ -11,9 +11,13 @@ export default function Modal({ isOpen, onClose, title, children }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
+          onKeyDown={(e) => e.key === 'Escape' && onClose()}
         >
           <motion.div
             className="glass-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
             style={{ width: '90%', maxWidth: '500px', padding: '24px', position: 'relative' }}
             initial={{ scale: 0.9, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
@@ -21,12 +25,13 @@ export default function Modal({ isOpen, onClose, title, children }) {
             onClick={(e) => e.stopPropagation()}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: '600' }}>{title}</h2>
-              <button 
+              <h2 id="modal-title" style={{ fontSize: '1.25rem', fontWeight: '600' }}>{title}</h2>
+              <button
                 onClick={onClose}
+                aria-label="Cerrar"
                 style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit', opacity: 0.7 }}
               >
-                <X size={24} />
+                <X size={24} aria-hidden="true" />
               </button>
             </div>
             <div>
