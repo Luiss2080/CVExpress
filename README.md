@@ -1,96 +1,117 @@
 <div align="center">
   <img src="public/favicon.svg" alt="Logo" width="80" height="80">
-  <h1 align="center">Generador de CV Pro 🚀</h1>
+  <h1 align="center">📄 CVExpress</h1>
   <p align="center">
-    <strong>El constructor de currículums definitivo, moderno y listo para producción.</strong>
-    <br />
-    <br />
-    <a href="#características-principales">Características</a>
-    ·
-    <a href="#tecnologías">Tecnologías</a>
-    ·
-    <a href="#instalación">Instalación</a>
+    <strong>Arma tu currículum en el navegador y expórtalo a PDF, sin registrarte ni instalar nada.</strong>
   </p>
 </div>
 
 ---
 
-## 🌟 Visión General
+## Visión general
 
-**Generador de CV Pro** pasó de ser un simple script en Vanilla JS a una arquitectura moderna y robusta, construida a través del estándar **Spec-Driven Development (SDD)**. 
+**CVExpress** es un generador de currículums que corre enteramente en el
+navegador: no hay backend ni base de datos, tus datos nunca salen de tu
+equipo. Completas un formulario por pestañas, ves el resultado
+actualizarse al instante en una vista previa con formato A4, y descargas
+el CV como PDF cuando estás conforme.
 
-El objetivo es ofrecer a los buscadores de empleo una experiencia _Premium_ de creación de currículums (SaaS-like), con interfaces altamente interactivas, renderizado instantáneo y control granular sobre el diseño final.
+Pensado para quien necesita armar o actualizar su CV rápido, con dos
+plantillas listas para usar y sin curva de aprendizaje.
 
----
+## Características
 
-## ✨ Características Principales
+Verificadas contra el código en `src/`:
 
-- 🎨 **Diseño Premium (Glassmorphism):** Interfaz deslumbrante con gradientes fluidos animados y **Modo Oscuro nativo**.
-- 🛠 **Editor Inteligente por Pestañas:** Olvídate del scroll infinito. El formulario está dividido en pestañas animadas (`Personal`, `Experiencia`, `Educación`, `Diseño`).
-- ✋ **Drag & Drop (Arrastrar y Soltar):** Reordena fácilmente tu experiencia laboral y académica utilizando gestos naturales del ratón.
-- 🎭 **Múltiples Plantillas (Layouts):**
-  - **Clásico:** Formal, enfocado en el contenido con tipografía Serif.
-  - **Moderno:** Audaz, con barra lateral (Sidebar) destacada y detalles creativos.
-- 🖌 **Motor de Personalización:** Cambia el color de acento y la tipografía base; el documento renderizado se actualizará inmediatamente.
-- 💾 **Persistencia Automática:** Tus datos se autoguardan localmente mientras escribes (Debounce).
-- 📦 **Importar/Exportar:** Descarga tus datos como archivo `.json` para respaldos, o impórtalo cuando lo necesites.
-- 📄 **Exportación PDF Precisa:** Genera archivos PDF de alta calidad estrictamente calibrados para el formato estándar A4.
+- **Editor por pestañas:** Datos Personales, Experiencia, Educación &
+  Habilidades, y Diseño (`src/components/EditorForm.jsx`).
+- **Dos plantillas de CV:** Clásica (`src/layouts/LayoutClassic.jsx`) y
+  Moderna con barra lateral (`src/layouts/LayoutModern.jsx`), elegibles
+  desde el modal de configuración.
+- **Vista previa en vivo:** cada cambio en el formulario se refleja de
+  inmediato en el documento (`src/components/CVPreview.jsx`).
+- **Reordenar arrastrando:** la experiencia laboral y la educación se
+  reordenan arrastrando cada tarjeta (`framer-motion`); por ahora es solo
+  con mouse/táctil, no hay una alternativa por teclado.
+- **Personalización de diseño:** color de acento y tipografía
+  (sans-serif, serif o monospace) aplicados en tiempo real.
+- **Modo oscuro** para la interfaz del editor (no afecta el CV, que
+  siempre se ve sobre fondo blanco).
+- **Autoguardado local:** tus datos se guardan en `localStorage` 500 ms
+  después de cada cambio (`src/hooks/useCVData.js`), y se recuperan solos
+  la próxima vez que abres la app. Si el dato guardado está corrupto o
+  incompleto, la app usa valores por defecto en vez de romperse.
+- **Exportar a JSON:** botón para descargar todos tus datos como
+  `cv_data.json` de respaldo, desde el modal de configuración. (Por ahora
+  es solo exportación; todavía no existe una opción para volver a
+  importar ese archivo.)
+- **Exportación a PDF:** genera un PDF en A4 con `html2pdf.js` desde el
+  botón "Descargar PDF".
 
----
+## Cómo usar
 
-## 💻 Tecnologías
+1. Completa tus datos en las pestañas del panel izquierdo.
+2. Ábre "Configuración avanzada" (ícono de engranaje) para elegir la
+   plantilla (Clásica o Moderna) y, si quieres, exportar tus datos a
+   JSON como respaldo.
+3. Revisa el resultado en la vista previa de la derecha.
+4. Pulsa "Descargar PDF" cuando estés conforme.
 
-Este proyecto emplea un _Stack_ tecnológico moderno enfocado en la velocidad y la interactividad:
+Tus datos quedan guardados en el navegador automáticamente: puedes
+cerrar la pestaña y seguir editando más tarde desde el mismo navegador.
 
-- **Core:** React 18 + Vite (Ultrarrápido)
-- **Animaciones:** Framer Motion (Transiciones, Modales, Drag & Drop)
-- **Estilos:** Vanilla CSS (CSS Grid, Variables HSL, animaciones nativas)
-- **Iconografía:** Lucide React
-- **Exportación a PDF:** html2pdf.js
-- **Testing (TDD):** Vitest + React Testing Library
+## Instalación y uso local
 
----
-
-## 🚀 Instalación y Uso Local
-
-Para correr este proyecto en tu entorno de desarrollo, sigue estos sencillos pasos:
-
-### Prerrequisitos
-- [Node.js](https://nodejs.org/es/) (Versión 16.x o superior)
+### Requisitos
+- [Node.js](https://nodejs.org/es/) 18 o superior
 
 ### Pasos
 
-1. **Clonar y acceder al directorio:**
-   ```bash
-   git clone https://github.com/tu-usuario/generador-cv-web.git
-   cd generador-cv-web
-   ```
+```bash
+# Clonar y entrar al directorio
+git clone https://github.com/Luiss2080/generador-cv-web.git
+cd generador-cv-web
 
-2. **Instalar dependencias:**
-   ```bash
-   npm install
-   ```
+# Instalar dependencias
+npm install
 
-3. **Ejecutar servidor en desarrollo:**
-   ```bash
-   npm run dev
-   ```
-   > Abre tu navegador en `http://localhost:5173/` y maravíllate.
+# Servidor de desarrollo (http://localhost:5173)
+npm run dev
 
-4. **Ejecutar Pruebas Automatizadas:**
-   ```bash
-   npm run test
-   ```
+# Ejecutar las pruebas
+npm test
 
-5. **Construir para Producción:**
-   ```bash
-   npm run build
-   ```
+# Compilar para producción
+npm run build
+```
 
----
+## Tecnologías
 
-## 📚 SDD (Spec-Driven Development)
+Confirmado contra `package.json` y los imports reales en `src/`:
 
-Este proyecto se desarrolló utilizando un enfoque dirigido por especificaciones. Todos los requerimientos funcionales (EARS) y la documentación oficial de IA se encuentran en la carpeta de respaldos y en la configuración interna de la metodología.
+- **Core:** React 19 + Vite 8
+- **Animaciones y drag-and-drop:** Framer Motion
+- **Iconos:** lucide-react
+- **Exportación a PDF:** html2pdf.js
+- **Estilos:** CSS plano con variables (sin framework de estilos)
+- **Testing:** Vitest + Testing Library (`@testing-library/react`,
+  `@testing-library/jest-dom`) sobre jsdom
 
-<p align="center">Hecho con ❤️ enfocados en una <b>UX (Experiencia de Usuario) inigualable</b>.</p>
+`react-hook-form` y `react-icons` están listados en `package.json` pero
+no se usan en ningún componente actual; se mantienen documentados aquí
+para que quede claro que no forman parte del stack real hasta que se
+usen o se retiren.
+
+## Tests
+
+```bash
+npm test
+```
+
+Corre la suite de Vitest: pruebas del hook `useCVData` que cubren los
+valores por defecto, la actualización de datos personales y la
+actualización de la configuración de diseño (`src/tests/useCVData.test.jsx`).
+
+## Licencia
+
+MIT — ver [LICENSE](LICENSE).
