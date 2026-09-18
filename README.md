@@ -1,117 +1,122 @@
 <div align="center">
-  <img src="public/favicon.svg" alt="Logo" width="80" height="80">
-  <h1 align="center">📄 CVExpress</h1>
-  <p align="center">
-    <strong>Arma tu currículum en el navegador y expórtalo a PDF, sin registrarte ni instalar nada.</strong>
+  <img src="docs/assets/logo.svg" width="96" alt="Logo de CVExpress" />
+  <h1>CVExpress</h1>
+  <p><b>Arma tu currículum en el navegador, con vista previa en vivo, y descárgalo en PDF sin registrarte.</b></p>
+  <img src="https://img.shields.io/badge/estado-funcional-brightgreen?style=for-the-badge" alt="Estado: funcional" />
+  <img src="https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/Vite-8-646cff?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 8" />
+  <img src="https://img.shields.io/badge/tests-18%20pasan-brightgreen?style=for-the-badge" alt="18 tests pasan" />
+  <img src="https://img.shields.io/badge/licencia-MIT-blue?style=for-the-badge" alt="Licencia MIT" />
+  <br />
+  <a href="https://github.com/Luiss2080/CVExpress/actions/workflows/ci.yml"><img src="https://github.com/Luiss2080/CVExpress/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <p>
+    <a href="#-inicio-rápido">Inicio rápido</a> ·
+    <a href="#-características">Características</a> ·
+    <a href="#️-arquitectura">Arquitectura</a> ·
+    <a href="#-pruebas">Pruebas</a> ·
+    <a href="#-lo-que-todavía-no-existe">Limitaciones</a>
   </p>
 </div>
 
----
+**CVExpress** es una aplicación web de una sola página que corre por completo en el navegador: no hay backend ni base de datos, y tus datos solo se guardan en el `localStorage` de tu equipo. Rellenas un formulario por pestañas, ves el CV en formato A4 y lo exportas a PDF. **No es** un servicio con cuentas, sincronización en la nube ni importación de CVs existentes.
 
-## Visión general
+## 🎬 Vista rápida
 
-**CVExpress** es un generador de currículums que corre enteramente en el
-navegador: no hay backend ni base de datos, tus datos nunca salen de tu
-equipo. Completas un formulario por pestañas, ves el resultado
-actualizarse al instante en una vista previa con formato A4, y descargas
-el CV como PDF cuando estás conforme.
+<p align="center">
+  <img src="docs/screenshots/editor-y-vista-previa.png" width="900" alt="Editor por pestañas a la izquierda y vista previa A4 del currículum a la derecha, con datos de ejemplo ficticios" />
+</p>
 
-Pensado para quien necesita armar o actualizar su CV rápido, con dos
-plantillas listas para usar y sin curva de aprendizaje.
+<sub>Captura con datos ficticios ("Ana Ejemplo").</sub>
 
-## Características
+## ✨ Características
 
-Verificadas contra el código en `src/`:
+| Característica | Detalle (verificado en `src/`) |
+| --- | --- |
+| Editor por pestañas | Personal, Experiencia, Educación & Más y Diseño (`EditorForm.jsx`). |
+| Vista previa en vivo | El CV se actualiza al escribir (`CVPreview.jsx`). |
+| Dos plantillas | Clásico (`LayoutClassic.jsx`) y Moderno con barra lateral (`LayoutModern.jsx`), desde el modal de configuración. |
+| Reordenar | Experiencia y educación se reordenan arrastrando (Framer Motion) o con los botones subir/bajar de cada tarjeta. |
+| Diseño | Color de acento y tipografía (sans-serif, serif o monospace). |
+| Modo oscuro | Solo para la interfaz del editor; el CV siempre va sobre fondo blanco. |
+| Autoguardado | En `localStorage` (clave `cvData`) 500 ms después de cada cambio; con datos corruptos o incompletos usa valores por defecto. |
+| Exportar | PDF A4 con `html2pdf.js` y respaldo `cv_data.json`. |
+| Habilidades | Se guardan como texto separado por comas; se agregan sin duplicados (`utils/skills.js`). |
 
-- **Editor por pestañas:** Datos Personales, Experiencia, Educación &
-  Habilidades, y Diseño (`src/components/EditorForm.jsx`).
-- **Dos plantillas de CV:** Clásica (`src/layouts/LayoutClassic.jsx`) y
-  Moderna con barra lateral (`src/layouts/LayoutModern.jsx`), elegibles
-  desde el modal de configuración.
-- **Vista previa en vivo:** cada cambio en el formulario se refleja de
-  inmediato en el documento (`src/components/CVPreview.jsx`).
-- **Reordenar arrastrando:** la experiencia laboral y la educación se
-  reordenan arrastrando cada tarjeta (`framer-motion`); por ahora es solo
-  con mouse/táctil, no hay una alternativa por teclado.
-- **Personalización de diseño:** color de acento y tipografía
-  (sans-serif, serif o monospace) aplicados en tiempo real.
-- **Modo oscuro** para la interfaz del editor (no afecta el CV, que
-  siempre se ve sobre fondo blanco).
-- **Autoguardado local:** tus datos se guardan en `localStorage` 500 ms
-  después de cada cambio (`src/hooks/useCVData.js`), y se recuperan solos
-  la próxima vez que abres la app. Si el dato guardado está corrupto o
-  incompleto, la app usa valores por defecto en vez de romperse.
-- **Exportar a JSON:** botón para descargar todos tus datos como
-  `cv_data.json` de respaldo, desde el modal de configuración. (Por ahora
-  es solo exportación; todavía no existe una opción para volver a
-  importar ese archivo.)
-- **Exportación a PDF:** genera un PDF en A4 con `html2pdf.js` desde el
-  botón "Descargar PDF".
+## 🏗️ Arquitectura
 
-## Cómo usar
-
-1. Completa tus datos en las pestañas del panel izquierdo.
-2. Ábre "Configuración avanzada" (ícono de engranaje) para elegir la
-   plantilla (Clásica o Moderna) y, si quieres, exportar tus datos a
-   JSON como respaldo.
-3. Revisa el resultado en la vista previa de la derecha.
-4. Pulsa "Descargar PDF" cuando estés conforme.
-
-Tus datos quedan guardados en el navegador automáticamente: puedes
-cerrar la pestaña y seguir editando más tarde desde el mismo navegador.
-
-## Instalación y uso local
-
-### Requisitos
-- [Node.js](https://nodejs.org/es/) 18 o superior
-
-### Pasos
-
-```bash
-# Clonar y entrar al directorio
-git clone https://github.com/Luiss2080/generador-cv-web.git
-cd generador-cv-web
-
-# Instalar dependencias
-npm install
-
-# Servidor de desarrollo (http://localhost:5173)
-npm run dev
-
-# Ejecutar las pruebas
-npm test
-
-# Compilar para producción
-npm run build
+```mermaid
+flowchart TD
+  M["main.jsx"] --> A["App.jsx"]
+  A --> E["components/EditorForm.jsx"]
+  A --> P["components/CVPreview.jsx"]
+  A --> H["hooks/useCVData.js"]
+  H --> LS["localStorage: cvData"]
+  E --> S["utils/skills.js"]
+  P --> L1["layouts/LayoutClassic.jsx"]
+  P --> L2["layouts/LayoutModern.jsx"]
+  A --> PDF["html2pdf.js"]
 ```
 
-## Tecnologías
+## 🚀 Inicio rápido
 
-Confirmado contra `package.json` y los imports reales en `src/`:
+| Requisito | Versión |
+| --- | --- |
+| Node.js | 18 o superior (el CI usa 20) |
 
-- **Core:** React 19 + Vite 8
-- **Animaciones y drag-and-drop:** Framer Motion
-- **Iconos:** lucide-react
-- **Exportación a PDF:** html2pdf.js
-- **Estilos:** CSS plano con variables (sin framework de estilos)
-- **Testing:** Vitest + Testing Library (`@testing-library/react`,
-  `@testing-library/jest-dom`) sobre jsdom
+```bash
+git clone https://github.com/Luiss2080/CVExpress.git
+cd CVExpress
+npm ci
+npm run dev        # http://localhost:5173
+```
 
-`react-hook-form` y `react-icons` están listados en `package.json` pero
-no se usan en ningún componente actual; se mantienen documentados aquí
-para que quede claro que no forman parte del stack real hasta que se
-usen o se retiren.
+Uso: completa las pestañas, abre el engranaje para elegir plantilla o exportar el JSON, revisa la vista previa y pulsa "Descargar PDF".
 
-## Tests
+Otros comandos: `npm test`, `npm run lint`, `npm run build`, `npm run preview`.
+
+<details>
+<summary>Estructura de carpetas</summary>
+
+```text
+src/
+  App.jsx, main.jsx, index.css
+  components/   EditorForm, CVPreview, ui/AnimatedButton, ui/Modal
+  layouts/      LayoutClassic, LayoutModern
+  hooks/        useCVData
+  utils/        skills
+  tests/        skills.test.js, useCVData.test.jsx
+.github/workflows/ci.yml   # lint + test + build en Node 20
+```
+
+</details>
+
+<details>
+<summary>Tecnologías (según package.json)</summary>
+
+React 19, Vite 8, Framer Motion, lucide-react, html2pdf.js, CSS plano con variables. Pruebas: Vitest 5 + Testing Library sobre jsdom. Lint: oxlint.
+
+`react-hook-form` y `react-icons` figuran en `package.json` pero no se importan en `src/`.
+
+</details>
+
+## 🧪 Pruebas
 
 ```bash
 npm test
 ```
 
-Corre la suite de Vitest: pruebas del hook `useCVData` que cubren los
-valores por defecto, la actualización de datos personales y la
-actualización de la configuración de diseño (`src/tests/useCVData.test.jsx`).
+**18 tests** en 2 archivos (verificado): 7 del hook `useCVData` (valores por defecto, actualización, JSON inválido, migración de datos incompletos, persistencia con debounce) y 11 de `utils/skills`. El CI ejecuta lint, tests y build en cada push y pull request a `main`. No hay pruebas de los componentes de interfaz ni de la exportación a PDF.
 
-## Licencia
+## 🚧 Lo que todavía no existe
 
-MIT — ver [LICENSE](LICENSE).
+- Importar de vuelta un `cv_data.json` (hoy solo se exporta).
+- Pruebas E2E o de la generación del PDF.
+- Un solo CV por navegador: no hay múltiples perfiles.
+- `npm run lint` avisa de una importación sin usar (`CheckCircle` en `EditorForm.jsx`), y el build advierte de un bundle mayor a 500 kB.
+- El paquete se llama `temp_app` en `package.json` y hay dependencias sin uso.
+
+## 📄 Licencia
+
+MIT (ver [LICENSE](LICENSE)).
+
+<div align="center"><sub>Hecho por Luiss2080 · Santa Cruz de la Sierra, Bolivia</sub></div>
